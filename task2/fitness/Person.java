@@ -1,18 +1,18 @@
 package fitness;
 
+import java.util.Objects;
+
 class Person {
-  String firstName;
-  String lastName;
+  String firstName, lastName;
   int birthYear;
 
   public Person(String firstName, String lastName, int birthYear) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+    this.firstName = Objects.requireNonNull(firstName);
+    this.lastName = Objects.requireNonNull(lastName);
     this.birthYear = birthYear;
   }
 
-  @Override
-  public String toString() {
-    return firstName + " " + lastName;
+  public String getFullName() {
+    return firstName + " " + lastName + " " + birthYear;
   }
 }
