@@ -14,11 +14,8 @@ public class Main {
       MenuService menuService = new MenuService(dishRepository, drinkRepository);
       OrderService orderService = new OrderService(priceService);
 
-      RestaurantApp app = new RestaurantApp(
-          restaurantRepository,
-          menuService,
-          orderService,
-          priceService);
+      RestaurantApp app =
+          new RestaurantApp(restaurantRepository, menuService, orderService, priceService);
       app.run();
     } catch (SQLException e) {
       System.err.println("Ошибка работы с базой данных: " + e.getMessage());

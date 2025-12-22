@@ -1,7 +1,5 @@
 public enum DishType {
-    MEAT,
-    FISH,
-    OTHER
+  MEAT,
+  FISH,
+  OTHER
 }
-
-

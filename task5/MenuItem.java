@@ -1,12 +1,10 @@
 public interface MenuItem {
 
-    int getId();
+  int getId();
 
-    String getName();
+  String getName();
 
-    double getBasePrice();
+  double getBasePrice();
 
-    boolean isFood();
+  boolean isFood();
 }
-
-

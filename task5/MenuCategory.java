@@ -1,7 +1,5 @@
 public enum MenuCategory {
-    REGULAR,
-    BREAKFAST,
-    BUSINESS_LUNCH
+  REGULAR,
+  BREAKFAST,
+  BUSINESS_LUNCH
 }
-
-
