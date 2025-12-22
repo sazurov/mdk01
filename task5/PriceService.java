@@ -5,8 +5,8 @@ import java.util.function.Function;
 
 public class PriceService {
 
-    private static final double MOSCOW_MARKUP = 0.10; // 10% дороже
-    private static final double FOOD_DISCOUNT = 0.20; // 20% скидка на еду
+    private final double moscowMarkup = 0.10;
+    private final double foodDiscount = 0.20;
 
     private final DishRepository dishRepository;
     private final DrinkRepository drinkRepository;
@@ -19,11 +19,11 @@ public class PriceService {
     public double calculateItemPrice(MenuItem item, RestaurantBranch restaurant, LocalDateTime dateTime) {
         double price = item.getBasePrice();
         if (restaurant.isMoscow()) {
-            price += price * MOSCOW_MARKUP;
+            price += price * moscowMarkup;
         }
 
         if (item.isFood() && isFoodDiscountTime(dateTime)) {
-            price -= price * FOOD_DISCOUNT;
+            price -= price * foodDiscount;
         }
         return round(price);
     }

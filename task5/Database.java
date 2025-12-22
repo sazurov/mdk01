@@ -19,7 +19,6 @@ public class Database {
 
     public void initialize() throws SQLException {
         try {
-            // Для sqlite-jdbc (нужно добавить соответствующий .jar в classpath при запуске)
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.err.println("Внимание: драйвер org.sqlite.JDBC не найден. Убедитесь, что библиотека sqlite-jdbc добавлена в classpath.");
@@ -121,11 +120,9 @@ public class Database {
     private void seedRestaurants(Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(
                 "INSERT INTO restaurants (id, name, city, is_moscow) VALUES (?, ?, ?, ?)")) {
-            // 3 филиала в Москве
             insertRestaurant(ps, 1, "Москва - Центр", "Москва", true);
             insertRestaurant(ps, 2, "Москва - Север", "Москва", true);
             insertRestaurant(ps, 3, "Москва - Юг", "Москва", true);
-            // 2 в Санкт-Петербурге
             insertRestaurant(ps, 4, "Питер - Невский", "Санкт-Петербург", false);
             insertRestaurant(ps, 5, "Питер - Васильевский", "Санкт-Петербург", false);
         }
@@ -144,7 +141,6 @@ public class Database {
         try (PreparedStatement ps = connection.prepareStatement(
                 "INSERT INTO dishes (id, name, vegetarian, calories, type, base_price, category) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?)")) {
-            // Общие блюда
             insertDish(ps, 1, "Борщ", false, 250, "MEAT", 250.0, "REGULAR");
             insertDish(ps, 2, "Салат овощной", true, 150, "OTHER", 180.0, "REGULAR");
             insertDish(ps, 3, "Стейк из лосося", false, 320, "FISH", 480.0, "REGULAR");
@@ -152,8 +148,6 @@ public class Database {
             insertDish(ps, 5, "Яичница с беконом", false, 300, "MEAT", 260.0, "BREAKFAST");
             insertDish(ps, 6, "Бизнес-ланч: суп и салат", false, 400, "OTHER", 350.0, "BUSINESS_LUNCH");
             insertDish(ps, 7, "Бизнес-ланч: паста и кофе", false, 520, "OTHER", 400.0, "BUSINESS_LUNCH");
-
-            // Блюда от шефа (уникальные для каждого ресторана)
             insertDish(ps, 8, "Фирменный стейк Центр", false, 550, "MEAT", 650.0, "REGULAR");
             insertDish(ps, 9, "Фирменная паста Север", false, 500, "OTHER", 620.0, "REGULAR");
             insertDish(ps, 10, "Фирменный плов Юг", false, 580, "MEAT", 590.0, "REGULAR");
@@ -203,14 +197,11 @@ public class Database {
     private void seedRestaurantDishes(Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(
                 "INSERT INTO restaurant_dishes (restaurant_id, dish_id, chef_special) VALUES (?, ?, ?)")) {
-            // Общие блюда (1-7) есть во всех ресторанах
             for (int restaurantId = 1; restaurantId <= 5; restaurantId++) {
                 for (int dishId = 1; dishId <= 7; dishId++) {
                     insertRestaurantDish(ps, restaurantId, dishId, false);
                 }
             }
-
-            // Блюда от шефа: по одному уникальному на ресторан
             insertRestaurantDish(ps, 1, 8, true);
             insertRestaurantDish(ps, 2, 9, true);
             insertRestaurantDish(ps, 3, 10, true);
